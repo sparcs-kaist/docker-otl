@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  otl-server:
+    container_name: otl-server
+    restart: always
+    build: ./server
+    ports:
+      - 80:80
+      - 443:443
+    expose:
+      - 80
+      - 443
+    volumes:
+      - ./settings_local.py:/otlplus/otlplus/settings_local.py
+      - ./keys:/otlplus/keys
