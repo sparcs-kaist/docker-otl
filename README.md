@@ -3,7 +3,7 @@
 * Make sure that the DNS record of `otl-test.sparcs.org` to be equal to the IP address of your host before starting the following jobs.
 * You should change the password of users `sysop` and `wheel` by executing the following command at your host:
 ```shell
-sudo docker exec -it otl-server /bin/bash -c "passwd sysop && passwd wheel"
+sudo docker exec -it otl-server /bin/bash -c "echo SYSOP && passwd sysop && echo WHEEL && passwd wheel"
 ```
 * You should issue and install the certificate for `otl-test.sparcs.org` by executing the follwing command at your host:
 ```shell
