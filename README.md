@@ -26,7 +26,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo curl -L https://raw.githubusercontent.com/docker/compose/1.23.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
 git clone https://github.com/sparcs-kaist/docker-otl.git
 cd docker-otl
-mkdir logs db server/keys server/scripts
+mkdir logs db server/keys
 ```
 * The following files should exist the `./server` directory:
   * `otl.conf`
