@@ -8,13 +8,15 @@ sudo docker exec -it otl-server /bin/bash -c "echo SYSOP && passwd sysop && echo
 * You should issue and install the certificate for `otl-test.sparcs.org` by executing the follwing command at your host:
 ```shell
 sudo docker exec otl-server /bin/bash -c "\
-  echo \"<VirtualHost *:80>\" > /etc/apache2/sites-enabled/temp && \
-  echo \"ServerName otl-test.sparcs.org\" >> /etc/apache2/sites-enabled/temp && \
-  echo \"DocumentRoot /var/www/otlplus\" >> /etc/apache2/sites-enabled/temp && \
-  echo \"</VirtualHost>\" >> /etc/apache2/sites-enabled/temp && \
+  echo \"<VirtualHost *:80>\" > /etc/apache2/sites-available/temp && \
+  echo \"ServerName otl-test.sparcs.org\" >> /etc/apache2/sites-available/temp && \
+  echo \"DocumentRoot /var/www/otlplus\" >> /etc/apache2/sites-available/temp && \
+  echo \"</VirtualHost>\" >> /etc/apache2/sites-available/temp && \
+  a2ensite temp && \
   /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl-test.sparcs.org && \
-  rm /etc/apache2/sites-enabled/temp && \
-  ln -s /etc/apache2/sites-available/otl-test.conf /etc/apache2/sites-enabled/otl-test.conf && \
+  a2dissite temp && \
+  rm /etc/apache2/sites-available/temp && \
+  a2ensite otl-test.conf && \
   service apache2 start"
 ```
 * After finishing the jobs, you should contact the KAIST IC team and change the DNS record of `otl.kaist.ac.kr`.
@@ -26,8 +28,8 @@ sudo docker exec otl-server /bin/bash -c "\
 sudo docker exec otl-server /bin/bash -c "\
   service apache2 stop && \
   /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl.kaist.ac.kr -d otl.sparcs.org -d otlplus.sparcs.org && \
-  rm /etc/apache2/sites-enabled/otl-test.conf && \
-  ln -s /etc/apache2/sites-available/otl.conf /etc/apache2/sites-enabled/otl.conf && \
+  a2dissite otl-test.conf && \
+  a2ensite otl.conf && \
   service apache2 start"
 ```
 ## Setup
