@@ -1,4 +1,11 @@
+*.sw[op]
+
 settings_local.py
 keys
+db_update_script.sh
+do_import_user_major.py
+import_scholardb_all.sh
+update_scholardb.py
+update_taken_lecture.py
+update_taken_lecture_user.py
 db.sh
-*.sw[op]
