@@ -38,7 +38,7 @@ mkdir logs db server/keys server/scripts
   * `sso_secret`
 * The following files should exist the `./server/scripts` directory:
   * `do_import_user_major.py`
-  * `import_scholardb_all.sh
+  * `import_scholardb_all.sh`
   * `update_scholardb.py`
   * `update_taken_lecture.py`
   * `update_taken_lecture_user.py`
