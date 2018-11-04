@@ -10,13 +10,14 @@ sudo docker exec -it otl-server /bin/bash -c "echo SYSOP && passwd sysop && echo
 sudo docker exec otl-server /bin/bash -c "\
   echo \"<VirtualHost *:80>\" > /etc/apache2/sites-available/temp.conf && \
   echo \"ServerName otl-test.sparcs.org\" >> /etc/apache2/sites-available/temp.conf && \
-  echo \"DocumentRoot /var/www/otlplus\" >> /etc/apache2/sites-available/temp.conf && \
+  echo \"DocumentRoot /var/www/html\" >> /etc/apache2/sites-available/temp.conf && \
   echo \"</VirtualHost>\" >> /etc/apache2/sites-available/temp.conf && \
   a2ensite temp && \
   /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl-test.sparcs.org && \
   a2dissite temp && \
   rm /etc/apache2/sites-available/temp.conf && \
   a2ensite otl-test && \
+  service apache2 reload && \
   service apache2 start"
 ```
 * After finishing the jobs, you should contact the KAIST IC team and change the DNS record of `otl.kaist.ac.kr`.

@@ -70,8 +70,4 @@ RUN echo "  5 4 *   *   0   . /backup/db.sh" >> mycron
 RUN crontab mycron
 RUN rm mycron
 
-# services initiation
-RUN service ssh start
-RUN service cron start
-
-CMD /bin/bash
+CMD /bin/bash -c "service ssh start && service cron start && /bin/bash"
