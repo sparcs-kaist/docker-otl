@@ -6,6 +6,7 @@
 * Also, you should change the DNS records of `otl.sparcs.org` and `otlplus.sparcs.org`.
 * Issue certificates for `otl.kaist.ac.kr`, `otl.sparcs.org`, and `otlplus.sparcs.org` and
 * change the apache config file to use `otl.conf` instead of `otl-test.conf` by executing the following commands:
+* Do not forget to change the allowed host of the `settings_local.py` file in the container to `otl.kaist.ac.kr`.
 ```shell
 service apache2 stop
 /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl.kaist.ac.kr -d otl.sparcs.org -d otlplus.sparcs.org
@@ -31,7 +32,7 @@ mkdir logs db server/keys
 * The following files should exist the `./server` directory:
   * `otl.conf`
   * `otl-test.conf`
-  * `settings_local.py`
+  * `settings_local.py` (allowed host: `otl-test.sparcs.org`)
 * The following files should exist the `./server/keys` directory:
   * `django_secret`
   * `google_client_secrets.json`

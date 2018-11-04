@@ -52,18 +52,18 @@ WORKDIR /var/www/otlplus
 RUN pip install -r requirements.txt
 
 # Copying private files
-COPY ./settings_local.py:/var/www/otlplus/otlplus/settings_local.py
-COPY ./keys:/var/www/otlplus/keys
-COPY ./scripts/do_import_user_major.py:/var/www/otlplus/do_import_user_major.py
-COPY ./scripts/import_scholardb_all.sh:/var/www/otlplus/import_scholardb_all.sh
-COPY ./scripts/update_scholardb.py:/var/www/otlplus/update_scholardb.py
-COPY ./scripts/update_taken_lecture.py:/var/www/otlplus/update_taken_lecture.py
-COPY ./scripts/update_taken_lecture_user.py:/var/www/otlplus/update_taken_lecture_user.py
+COPY ./settings_local.py /var/www/otlplus/otlplus/settings_local.py
+COPY ./keys /var/www/otlplus/keys
+COPY ./scripts/do_import_user_major.py /var/www/otlplus/do_import_user_major.py
+COPY ./scripts/import_scholardb_all.sh /var/www/otlplus/import_scholardb_all.sh
+COPY ./scripts/update_scholardb.py /var/www/otlplus/update_scholardb.py
+COPY ./scripts/update_taken_lecture.py /var/www/otlplus/update_taken_lecture.py
+COPY ./scripts/update_taken_lecture_user.py /var/www/otlplus/update_taken_lecture_user.py
 
 # Crontab installation
-COPY ./scripts/db_update_script.sh:/db_update_script.sh
-COPY ./scripts/renewal.sh:/renewal.sh
-COPY ./scripts/db.sh:/backup/db.sh
+COPY ./scripts/db_update_script.sh /db_update_script.sh
+COPY ./scripts/renewal.sh /renewal.sh
+COPY ./scripts/db.sh /backup/db.sh
 RUN chmod u+x /db_update_script.sh /renewal.sh /backup/db.sh
 RUN echo "# m h dom mon dow command" > mycron
 RUN echo "  0 4 *   *   *   . /db_update_script.sh" >> mycron
