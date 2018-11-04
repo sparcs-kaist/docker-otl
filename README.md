@@ -8,7 +8,12 @@ sudo docker exec -it otl-server /bin/bash -c "echo SYSOP && passwd sysop && echo
 * You should issue and install the certificate for `otl-test.sparcs.org` by executing the follwing command at your host:
 ```shell
 sudo docker exec otl-server /bin/bash -c "\
+  echo \"<VirtualHost *:80>\" > /etc/apache2/sites-enabled/temp && \
+  echo \"ServerName otl-test.sparcs.org\" >> /etc/apache2/sites-enabled/temp && \
+  echo \"DocumentRoot /var/www/otlplus\" >> /etc/apache2/sites-enabled/temp && \
+  echo \"</VirtualHost>\" >> /etc/apache2/sites-enabled/temp && \
   /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl-test.sparcs.org && \
+  rm /etc/apache2/sites-enabled/temp && \
   ln -s /etc/apache2/sites-available/otl-test.conf /etc/apache2/sites-enabled/otl-test.conf && \
   service apache2 start"
 ```
