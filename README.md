@@ -1,18 +1,29 @@
 # docker-otl
-* This docker-compose will automatically start the `otl` service for domain `otl-test.sparcs.org`.
+* This docker-compose will automatically set up the `otl` service for domain `otl-test.sparcs.org`.
 * Make sure that the DNS record of `otl-test.sparcs.org` to be equal to the IP address of your host before starting the following jobs.
-* You should change the password of users `sysop` and `wheel` by executing `passwd sysop` and `passwd wheel` respectively.
+* You should change the password of users `sysop` and `wheel` by executing the following command at your host:
+```shell
+sudo docker exec -it otl-server /bin/bash -c "passwd sysop && passwd wheel"
+```
+* You should issue and install the certificate for `otl-test.sparcs.org` by executing the follwing command at your host:
+```shell
+sudo docker exec otl-server /bin/bash -c "\
+  /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl-test.sparcs.org && \
+  ln -s /etc/apache2/sites-available/otl-test.conf /etc/apache2/sites-enabled/otl-test.conf && \
+  service apache2 start"
+```
 * After finishing the jobs, you should contact the KAIST IC team and change the DNS record of `otl.kaist.ac.kr`.
 * Also, you should change the DNS records of `otl.sparcs.org` and `otlplus.sparcs.org`.
 * Issue certificates for `otl.kaist.ac.kr`, `otl.sparcs.org`, and `otlplus.sparcs.org` and
-* change the apache config file to use `otl.conf` instead of `otl-test.conf` by executing the following commands:
-* Do not forget to change the allowed host of the `settings_local.py` file in the container to `otl.kaist.ac.kr`.
+* change the apache config file to use `otl.conf` instead of `otl-test.conf` by executing the following commands
+* (do not forget to change the allowed host of the `settings_local.py` file in the container to `otl.kaist.ac.kr`):
 ```shell
-service apache2 stop
-/certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl.kaist.ac.kr -d otl.sparcs.org -d otlplus.sparcs.org
-rm /etc/apache2/sites-enabled/otl-test.conf
-ln -s /etc/apache2/sites-available/otl.conf /etc/apache2/sites-enabled/otl.conf
-service apache2 start
+sudo docker exec otl-server /bin/bash -c "\
+  service apache2 stop && \
+  /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl.kaist.ac.kr -d otl.sparcs.org -d otlplus.sparcs.org && \
+  rm /etc/apache2/sites-enabled/otl-test.conf && \
+  ln -s /etc/apache2/sites-available/otl.conf /etc/apache2/sites-enabled/otl.conf && \
+  service apache2 start"
 ```
 ## Setup
 ```shell

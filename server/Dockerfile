@@ -33,17 +33,15 @@ RUN echo "export LANG=ko_KR.UTF-8" >> /etc/environment
 RUN echo "export LANGUAGE=ko_KR.UTF-8" >> /etc/environment
 RUN echo "export LC_ALL=ko_KR.UTF-8" >> /etc/environment
 
-# Issuing certificate
+# Certbot installation
 RUN wget https://dl.eff.org/certbot-auto
 RUN chmod u+x certbot-auto
-RUN ./certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl-test.sparcs.org
 
 # Apache configuration
 RUN rm /etc/apache2/sites-available/*
 RUN rm /etc/apache2/sites-enabled/*
 COPY ./otl.conf /etc/apache2/sites-available/otl.conf
 COPY ./otl-test.conf /etc/apache2/sites-available/otl-test.conf
-RUN ln -s /etc/apache2/sites-available/otl-test.conf /etc/apache2/sites-enabled/otl-test.conf
 RUN a2enmod ssl
 
 # Repository cloning and pip installation
@@ -75,6 +73,5 @@ RUN rm mycron
 # services initiation
 RUN service ssh start
 RUN service cron start
-RUN service apache2 start
 
 CMD /bin/bash
