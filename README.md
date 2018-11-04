@@ -48,15 +48,15 @@ git clone https://github.com/sparcs-kaist/docker-otl.git
 cd docker-otl
 mkdir logs db server/keys
 ```
-* The following files should exist the `./server` directory:
+* The following files should exist the in `./server` directory:
   * `otl.conf`
   * `otl-test.conf`
   * `settings_local.py` (allowed host: `otl-test.sparcs.org`)
-* The following files should exist the `./server/keys` directory:
+* The following files should exist the in `./server/keys` directory:
   * `django_secret`
   * `google_client_secrets.json`
   * `sso_secret`
-* The following files should exist the `./server/scripts` directory:
+* The following files should exist the in `./server/scripts` directory:
   * `do_import_user_major.py`
   * `import_scholardb_all.sh`
   * `update_scholardb.py`
