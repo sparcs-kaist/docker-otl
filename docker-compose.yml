@@ -5,12 +5,11 @@ services:
     container_name: otl-server
     restart: always
     build: ./server
+    tty: true
     ports:
       - 80:80
       - 443:443
-    expose:
-      - 80
-      - 443
+      - 8022:22
     volumes:
-      - ./settings_local.py:/otlplus/otlplus/settings_local.py
-      - ./keys:/otlplus/keys
+      - ./logs:/var/log/apache2
+      - ./db:/backup/db

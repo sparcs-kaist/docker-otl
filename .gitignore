@@ -1,2 +1,4 @@
 settings_local.py
 keys
+db.sh
+*.sw[op]
