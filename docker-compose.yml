@@ -7,9 +7,9 @@ services:
     build: ./server
     tty: true
     ports:
-      - 80:80
-      - 443:443
-      - 8022:22
+      - "80:80"
+      - "443:443"
+      - "8022:22"
     volumes:
       - ./logs:/var/log/apache2
       - ./db:/backup/db
