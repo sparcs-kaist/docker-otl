@@ -30,6 +30,13 @@ sudo docker exec otl-server /bin/bash -c "\
   service apache2 reload && \
   service apache2 start"
 ```
+* To enable backup, you should add your public key to your backup server.
+* You may change user and domain name of the backup server properly.
+```shell
+sudo docker exec otl-server /bin/bash -c "\
+   ssh wheel@sparcs.org mkdir -p .ssh && \
+   cat ~/.ssh/id_rsa.pub | ssh wheel@sparcs.org \"cat >> .ssh/authorized_keys\""
+```
 ## Setup
 ```shell
 sudo apt-get update

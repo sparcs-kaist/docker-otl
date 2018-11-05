@@ -25,6 +25,9 @@ RUN usermod -G sudo sysop
 RUN adduser --gecos "" --disabled-password wheel
 RUN usermod -G sudo wheel
 
+# Creating public key
+RUN ssh-keygen -t rsa -f /root/.ssh/id_rsa -N ""
+
 # Locale configuration
 RUN sed -i -e 's/# ko_KR.UTF-8 UTF-8/ko_KR.UTF-8 UTF-8/' /etc/locale.gen
 RUN dpkg-reconfigure --frontend=noninteractive locales
