@@ -8,14 +8,8 @@ sudo docker exec -it otl-server /bin/bash -c "echo SYSOP && passwd sysop && echo
 * You should issue and install the certificate for `otl-test.sparcs.org` by executing the follwing command at your host:
 ```shell
 sudo docker exec otl-server /bin/bash -c "\
-  echo \"<VirtualHost *:80>\" > /etc/apache2/sites-available/temp.conf && \
-  echo \"ServerName otl-test.sparcs.org\" >> /etc/apache2/sites-available/temp.conf && \
-  echo \"DocumentRoot /var/www/html\" >> /etc/apache2/sites-available/temp.conf && \
-  echo \"</VirtualHost>\" >> /etc/apache2/sites-available/temp.conf && \
-  a2ensite temp && \
   /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl-test.sparcs.org && \
-  a2dissite temp && \
-  rm /etc/apache2/sites-available/temp.conf && \
+  a2dissite 000-default && \
   a2ensite otl-test && \
   service apache2 reload && \
   service apache2 start"
@@ -28,9 +22,12 @@ sudo docker exec otl-server /bin/bash -c "\
 ```shell
 sudo docker exec otl-server /bin/bash -c "\
   service apache2 stop && \
-  /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl.kaist.ac.kr -d otl.sparcs.org -d otlplus.sparcs.org && \
   a2dissite otl-test && \
+  a2ensite 000-default && \
+  /certbot-auto certonly -n --apache -m wheel@sparcs.org --agree-tos -d otl.kaist.ac.kr -d otl.sparcs.org -d otlplus.sparcs.org && \
+  a2dissite 000-default && \
   a2ensite otl && \
+  service apache2 reload && \
   service apache2 start"
 ```
 ## Setup
@@ -48,15 +45,15 @@ git clone https://github.com/sparcs-kaist/docker-otl.git
 cd docker-otl
 mkdir logs db server/keys
 ```
-* The following files should exist the in `./server` directory:
+* The following files should exist in the `./server` directory:
   * `otl.conf`
   * `otl-test.conf`
   * `settings_local.py` (allowed host: `otl-test.sparcs.org`)
-* The following files should exist the in `./server/keys` directory:
+* The following files should exist in the `./server/keys` directory:
   * `django_secret`
   * `google_client_secrets.json`
   * `sso_secret`
-* The following files should exist the in `./server/scripts` directory:
+* The following files should exist in the `./server/scripts` directory:
   * `do_import_user_major.py`
   * `import_scholardb_all.sh`
   * `update_scholardb.py`

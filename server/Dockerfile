@@ -38,8 +38,6 @@ RUN wget https://dl.eff.org/certbot-auto
 RUN chmod u+x certbot-auto
 
 # Apache configuration
-RUN rm /etc/apache2/sites-available/*
-RUN rm /etc/apache2/sites-enabled/*
 COPY ./otl.conf /etc/apache2/sites-available/otl.conf
 COPY ./otl-test.conf /etc/apache2/sites-available/otl-test.conf
 RUN a2enmod ssl
